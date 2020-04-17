@@ -12,9 +12,13 @@
 //All rights reserved
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 const static char Header[] = "HTTP/1.1 200 OK\r\n\Content-Length:";
-char package[256];
-char body[128];
+char package[512];
+char body[256];
 char cmd[32];
+
+#include "ds18b20.h"
+#include "adc.h"
+#include "bh1750.h"
 
 //ATK-ESP8266 WIFI AP测试
 //用于测试TCP/UDP连接
@@ -23,16 +27,19 @@ char cmd[32];
 u8 atk_8266_wifiap_test(void)
 {
     u16 rlen = 0;
-
     char mux = 0;
     char new_get = 0;
+    int time = 0;
+
+    short temperature; //存储温度数据
+    double high = 0;//存储液位高度数据
+    double lux;//存储光照强度数据
     atk_8266_send_cmd("AT+CIPMUX=1", "OK", 20); //0：单连接，1：多连接
-    atk_8266_send_cmd("AT+CIPSERVER=1,8080", "OK", 20);   //开启Server模式，端口号为8086
+    atk_8266_send_cmd("AT+CIPSERVER=1,80", "OK", 20);   //开启Server模式，端口号为8086
     printf("begin listen...\r\n");
     USART3_RX_STA = 0;
     while (1)
     {
-        delay_ms(5);
         if (USART3_RX_STA & 0X8000)     //接收到一次数据了
         {
             rlen = USART3_RX_STA & 0X7FFF; //得到本次接收到的数据长度
@@ -51,8 +58,14 @@ u8 atk_8266_wifiap_test(void)
 
             if (new_get)
             {
-                //组件显示内容
-                sprintf((char *)body, "hahaha\r\n");
+                //组建显示内容
+                sprintf((char *)body, "<html>\
+									<meta http-equiv=\"refresh\" content=\"1;url=#\">\
+								temp:%d.%dC<br/>\
+								high:%.2fcm<br/>\
+								light:%.2flux\
+								</html>", temperature / 10, temperature % 10, high, lux);
+
                 int bodylength = strlen(body);
                 //组建整体数据包
                 sprintf(package, "%s%d\r\n\r\n%s", Header, bodylength, body);
@@ -74,9 +87,23 @@ u8 atk_8266_wifiap_test(void)
             //清除buffer，等待接收下一个连接
             USART3_RX_STA = 0;
             memset(USART3_RX_BUF, 0, sizeof(USART3_RX_BUF));
+            continue;
+        }
+        delay_ms(5);
+        time++;
+        if (time >= 40)    //200ms更新一次数据
+        {
+            time = 0;
+            temperature = DS18B20_Get_Temp();
+
+            u16 adcx = Get_Adc_Average(ADC_Channel_1, 10);
+            if (adcx < 900)    high = 0.0;
+            else if (adcx > 1900) high = 4.0;
+            else high = (adcx - 900) * 4.0 / 1000.0;    //总量程是4cm
+            lux = bh1750_ReadContinuous1() / 1.2f;
+
         }
     }
-
     return 0;
 }
 

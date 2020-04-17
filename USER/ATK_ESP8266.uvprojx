@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\ATK-ESP8266;..\CORE;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\HARDWARE\KEY;..\HARDWARE\LED;..\HARDWARE\SPI;..\HARDWARE\TIMER;..\HARDWARE\USART3;..\HARDWARE\W25QXX;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\USMART;..\HARDWARE\DS18B20;..\HARDWARE\ADC</IncludePath>
+              <IncludePath>..\ATK-ESP8266;..\CORE;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\HARDWARE\KEY;..\HARDWARE\LED;..\HARDWARE\SPI;..\HARDWARE\TIMER;..\HARDWARE\USART3;..\HARDWARE\W25QXX;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\USMART;..\HARDWARE\DS18B20;..\HARDWARE\ADC;..\HARDWARE\BH1750</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -485,6 +485,11 @@
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\ADC\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bh1750.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\BH1750\bh1750.c</FilePath>
             </File>
           </Files>
         </Group>
