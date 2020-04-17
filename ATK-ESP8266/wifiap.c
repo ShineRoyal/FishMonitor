@@ -71,7 +71,7 @@ u8 atk_8266_wifiap_test(void)
             sprintf(cmd, "AT+CIPCLOSE=%c\r\n", mux);
             printf("cmd:%s", cmd);
             atk_8266_send_cmd(cmd, "OK", 200); //发送指定长度的数据
-						//清除buffer，等待接收下一个连接
+            //清除buffer，等待接收下一个连接
             USART3_RX_STA = 0;
             memset(USART3_RX_BUF, 0, sizeof(USART3_RX_BUF));
         }

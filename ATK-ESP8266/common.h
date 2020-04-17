@@ -5,14 +5,11 @@
 #include "delay.h"
 #include "led.h"
 #include "key.h"
-#include "lcd.h"
+
 #include "w25qxx.h"
-#include "touch.h"
-#include "malloc.h"
+
 #include "string.h"
-#include "text.h"
 #include "usart3.h"
-#include "ff.h"
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK STM32开发板
