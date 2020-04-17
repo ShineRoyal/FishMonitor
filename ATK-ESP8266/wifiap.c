@@ -59,12 +59,19 @@ u8 atk_8266_wifiap_test(void)
             if (new_get)
             {
                 //组建显示内容
+//                sprintf((char *)body, "<html>\
+//                                  <meta http-equiv=\"refresh\" content=\"1;url=#\">\
+//                              temp:%d.%dC<br/>\
+//                              high:%.2fcm<br/>\
+//                              light:%.2flux\
+//                              </html>", temperature / 10, temperature % 10, high, lux);
+
                 sprintf((char *)body, "<html>\
-									<meta http-equiv=\"refresh\" content=\"1;url=#\">\
 								temp:%d.%dC<br/>\
 								high:%.2fcm<br/>\
 								light:%.2flux\
 								</html>", temperature / 10, temperature % 10, high, lux);
+
 
                 int bodylength = strlen(body);
                 //组建整体数据包
