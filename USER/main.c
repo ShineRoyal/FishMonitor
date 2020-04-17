@@ -4,11 +4,13 @@
 #include "led.h"
 
 #include "key.h"
-
-#include "w25qxx.h"
-#include "ds18b20.h"
 #include "usart3.h"
 #include "common.h"
+#include "w25qxx.h"
+
+#include "ds18b20.h"
+#include "adc.h"
+
 
 /************************************************
  ALIENTEK STM32F103开发板 扩展实验5
@@ -24,7 +26,7 @@
 int main(void)
 {
     short temperature;
-
+    u16 adcx;
     delay_init();            //延时函数初始化
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置中断优先级分组为组2：2位抢占优先级，2位响应优先级
     uart_init(115200);      //串口初始化为115200
@@ -37,13 +39,26 @@ int main(void)
         printf("DS18B20 Error\r\n");
         delay_ms(500);
     }
-    temperature = DS18B20_Get_Temp();
+//    temperature = DS18B20_Get_Temp();
+//    while (1)
+//    {
+//        temperature = DS18B20_Get_Temp();
+//        printf("%d.%dC\r\n", temperature / 10, temperature % 10);
+//        delay_ms(500);
+//    }
+
+    Adc_Init();             //ADC初始化
     while (1)
     {
-        temperature = DS18B20_Get_Temp();
-        printf("%d.%dC\r\n", temperature / 10, temperature % 10);
+        adcx = Get_Adc_Average(ADC_Channel_1, 10);//只淹没一点读出来是900，淹到过孔是1900的样子
+        double high = 0;
+        if (adcx < 900)    high = 0.0;
+        else if (adcx > 1900) high = 4.0;
+        else high = (adcx - 900) * 4.0 / 1000.0;    //总量程是4cm
+        printf("%d\t%f\r\n", adcx, high);
         delay_ms(500);
     }
+
     printf("init ok\r\n");
     while (atk_8266_send_cmd("AT", "OK", 20)) //检查WIFI模块是否在线
     {

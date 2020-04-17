@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\ATK-ESP8266;..\CORE;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\HARDWARE\KEY;..\HARDWARE\LED;..\HARDWARE\SPI;..\HARDWARE\TIMER;..\HARDWARE\USART3;..\HARDWARE\W25QXX;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\USMART;..\HARDWARE\DS18B20</IncludePath>
+              <IncludePath>..\ATK-ESP8266;..\CORE;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\HARDWARE\KEY;..\HARDWARE\LED;..\HARDWARE\SPI;..\HARDWARE\TIMER;..\HARDWARE\USART3;..\HARDWARE\W25QXX;..\STM32F10x_FWLib\inc;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\USMART;..\HARDWARE\DS18B20;..\HARDWARE\ADC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -481,6 +481,11 @@
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\DS18B20\ds18b20.c</FilePath>
             </File>
+            <File>
+              <FileName>adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\ADC\adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -535,6 +540,11 @@
               <FileName>stm32f10x_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\STM32F10x_FWLib\src\stm32f10x_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\STM32F10x_FWLib\src\stm32f10x_adc.c</FilePath>
             </File>
           </Files>
         </Group>
